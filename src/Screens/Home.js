@@ -11,6 +11,8 @@ import WebView from 'react-native-webview';
 import * as Icon from 'react-bootstrap-icons';
 import {SvgCss} from 'react-native-svg';
 import {useFocusEffect} from '@react-navigation/native';
+import Maps from './Maps';
+import Like from './Like';
 
 const Home = props => {
   const [index, setIndex] = useState(0);
@@ -60,17 +62,17 @@ const Home = props => {
 
   return (
     <View style={{flex: 1}}>
-      {index != 0 ? (
+      {index == 2 ? (
         <View
           style={{
             flex: 0.92,
-            justifyContent: 'center',
-            alignItems: 'center',
             backgroundColor: 'F5F6F5',
           }}>
-          <Text style={{fontSize: 16, fontWeight: '600', color: 'black'}}>
-            Blank Page
-          </Text>
+          <Like />
+        </View>
+      ) : index == 1 ? (
+        <View style={{flex: 0.92, backgroundColor: 'F5F6F5'}}>
+          <Maps />
         </View>
       ) : (
         <View style={{flex: 0.92, backgroundColor: 'F5F6F5'}}>
@@ -150,10 +152,10 @@ export default Home;
 
 const style = StyleSheet.create({
   bottomView: {
-    flex: 0.08,
+    flex: 0.09,
     flexDirection: 'row',
     shadowColor: '#000',
-    shadowOffset: {width: 0, height: 1},
+    shadowOffset: {width: 0, height: 2},
     shadowOpacity: 0.8,
     shadowRadius: 2,
     elevation: 5,

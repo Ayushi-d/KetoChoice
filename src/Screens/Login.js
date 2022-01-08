@@ -17,13 +17,18 @@ const Login = props => {
     <ImageBackground
       source={require('../assets/BG.png')}
       style={styles.imageView}>
-      <View style={{flex: 0.6}}></View>
+      <View style={{flex: 0.6, justifyContent: 'center'}}>
+        <Image
+          source={require('../assets/logoWhite.png')}
+          style={{height: 58, width: 200}}
+        />
+      </View>
       <View style={{flex: 0.4}}>
         <TouchableOpacity
           onPress={onHome}
           activeOpacity={0.6}
           style={styles.onlineView}>
-          <Text style={styles.orderText}>ORDER ONLINE</Text>
+          <Text style={styles.orderText}>ORDER NOW</Text>
         </TouchableOpacity>
       </View>
     </ImageBackground>
@@ -51,6 +56,8 @@ const styles = StyleSheet.create({
     backgroundColor: 'green',
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 20,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: 'white',
   },
 });
