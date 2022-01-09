@@ -12,7 +12,7 @@ import {
 const Login = props => {
   const onHome = () => {
     props.navigation.navigate('Home');
-  };
+  };``
   return (
     <ImageBackground
       source={require('../assets/BG.png')}

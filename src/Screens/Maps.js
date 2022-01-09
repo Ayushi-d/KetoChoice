@@ -1,5 +1,13 @@
-import React from 'react';
-import {Text, View, TouchableOpacity, StyleSheet} from 'react-native';
+import React, {useState} from 'react';
+import {
+  Text,
+  View,
+  TouchableOpacity,
+  StyleSheet,
+  Image,
+  Linking,
+  Platform,
+} from 'react-native';
 import MapView from 'react-native-maps';
 
 const Maps = () => {
@@ -77,15 +85,73 @@ const Maps = () => {
     },
   ];
 
+  const [locArray, setLocArray] = useState([]);
+
   const region = {
-    latitude: 36.8509,
-    longitude: 174.7645,
-    latitudeDelta: 110,
-    longitudeDelta: 200,
+    latitude: -36.71236,
+    longitude: 174.74674,
+    latitudeDelta: 20,
+    longitudeDelta: 10,
+  };
+
+  const onClickMarker = marker => {
+    const data = {
+      latitude: marker?.location?.latitude,
+      longitude: marker?.location?.longitude,
+    };
+
+    setLocArray(data);
+  };
+
+  const onOpenMaps = () => {
+    if (locArray.length == 0) {
+      alert('Please Select Location');
+      return;
+    }
+    var scheme = Platform.OS === 'ios' ? 'maps:' : 'geo:';
+    var url = scheme + `${locArray?.latitude},${locArray?.longitude}`;
+    Linking.openURL(url);
+  };
+
+  const onOpenDirection = () => {
+    if (locArray.length == 0) {
+      alert('Please Select Location to get Directions');
+      return;
+    }
+    const latLng = `${locArray?.latitude},${locArray?.longitude}`;
+    Linking.openURL(`google.navigation:q=${latLng}`);
   };
 
   return (
     <View>
+      <View style={styles.topView}>
+        <View style={{flex: 1, justifyContent: 'center'}}>
+          <Image
+            source={require('../assets/Google.png')}
+            style={{height: 17, width: 50, marginLeft: 10, marginTop: 5}}
+          />
+        </View>
+        <View
+          style={{
+            flexDirection: 'row',
+            flex: 1,
+            justifyContent: 'flex-end',
+            alignItems: 'center',
+          }}>
+          <TouchableOpacity onPress={onOpenDirection} style={styles.imageView}>
+            <Image
+              source={require('../assets/Direction.png')}
+              style={{height: 20, width: 20}}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={onOpenMaps} style={styles.imageView}>
+            <Image
+              source={require('../assets/Maps.png')}
+              style={{height: 20, width: 20}}
+            />
+          </TouchableOpacity>
+        </View>
+      </View>
       <MapView style={styles.absoluteFill} region={region}>
         {coordinate.map((marker, index) => (
           <MapView.Marker
@@ -110,5 +176,12 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     right: 0,
+  },
+  topView: {
+    height: 35,
+    flexDirection: 'row',
+  },
+  imageView: {
+    marginRight: 15,
   },
 });

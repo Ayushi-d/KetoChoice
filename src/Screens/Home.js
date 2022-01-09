@@ -87,7 +87,11 @@ const Home = props => {
           onPress={onOrder}
           style={
             index == 0
-              ? {...style.buttonView, backgroundColor: 'green'}
+              ? {
+                  ...style.buttonView,
+                  backgroundColor: 'green',
+                  borderTopWidth: 0,
+                }
               : style.buttonView
           }>
           {/* <Icon.ArrowBarDown style={{height : 10 , width : 10}} /> */}
@@ -108,7 +112,11 @@ const Home = props => {
           activeOpacity={0.8}
           style={
             index == 1
-              ? {...style.buttonView, backgroundColor: 'green'}
+              ? {
+                  ...style.buttonView,
+                  backgroundColor: 'green',
+                  borderTopWidth: 0,
+                }
               : style.buttonView
           }
           onPress={onFind}>
@@ -128,7 +136,11 @@ const Home = props => {
           activeOpacity={0.8}
           style={
             index == 2
-              ? {...style.buttonView, backgroundColor: 'green'}
+              ? {
+                  ...style.buttonView,
+                  backgroundColor: 'green',
+                  borderTopWidth: 0,
+                }
               : style.buttonView
           }
           onPress={onLike}>
@@ -154,13 +166,14 @@ const style = StyleSheet.create({
   bottomView: {
     flex: 0.09,
     flexDirection: 'row',
-    shadowColor: '#000',
-    shadowOffset: {width: 0, height: 2},
+    shadowColor: 'gray',
+    shadowOffset: {width: 0, height: 1},
     shadowOpacity: 0.8,
-    shadowRadius: 2,
-    elevation: 5,
-    borderTopColor: 'gray',
-    borderTopWidth: 0.23,
+    shadowRadius: 10,
+    elevation: 8,
+    overflow: 'hidden',
+    borderTopWidth: 1,
+    borderTopColor: 'lightgray',
   },
   buttonView: {
     justifyContent: 'space-evenly',
