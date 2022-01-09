@@ -174,6 +174,7 @@ const style = StyleSheet.create({
     overflow: 'hidden',
     borderTopWidth: 1,
     borderTopColor: 'lightgray',
+    backgroundColor  :'white'
   },
   buttonView: {
     justifyContent: 'space-evenly',

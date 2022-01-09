@@ -160,6 +160,7 @@ const Maps = () => {
             title={marker.title}
             description={marker.description}
             pinColor={'green'}
+            onPress={() => onClickMarker(marker)}
           />
         ))}
       </MapView>
