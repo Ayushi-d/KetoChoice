@@ -62,6 +62,7 @@ const Home = props => {
 
   return (
     <View style={{flex: 1}}>
+       {Platform.OS == 'ios' ? <View style = {{height : '3%' , backgroundColor : 'white'}}  /> : null }
       {index == 2 ? (
         <View
           style={{

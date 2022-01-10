@@ -8,7 +8,7 @@ import {
   Linking,
   Platform,
 } from 'react-native';
-import MapView from 'react-native-maps';
+import MapView, {Callout, CalloutSubview} from 'react-native-maps';
 
 const Maps = () => {
   const coordinate = [
@@ -103,6 +103,17 @@ const Maps = () => {
     setLocArray(data);
   };
 
+  // const openMapLatitude = marker => {
+
+  //   const latLng = `${marker?.location?.latitude},${}`;
+  //   Linking.openURL(`google.navigation:q=${latLng}`);
+
+  //   var scheme = Platform.OS === 'ios' ? 'maps:' : 'geo:';
+  //   var url =
+  //     scheme + `${marker?.location?.latitude},${marker?.location?.longitude}`;
+  //   Linking.openURL(url);
+  // };
+
   const onOpenMaps = () => {
     if (locArray.length == 0) {
       alert('Please Select Location');
@@ -118,8 +129,17 @@ const Maps = () => {
       alert('Please Select Location to get Directions');
       return;
     }
+    // const latLng = `${locArray?.latitude},${locArray?.longitude}`;
+    // Linking.openURL(`google.navigation:q=${latLng}`);
+    const scheme = Platform.select({ios: 'maps:0,0?q=', android: 'geo:0,0?q='});
     const latLng = `${locArray?.latitude},${locArray?.longitude}`;
-    Linking.openURL(`google.navigation:q=${latLng}`);
+    const label = 'Custom Label';
+    const url = Platform.select({
+      ios: `${scheme}${label}@${latLng}`,
+      android: `${scheme}${latLng}(${label})`,
+    });
+
+    Linking.openURL(url);
   };
 
   return (
@@ -160,8 +180,23 @@ const Maps = () => {
             title={marker.title}
             description={marker.description}
             pinColor={'green'}
-            onPress={() => onClickMarker(marker)}
-          />
+            onPress={() => onClickMarker(marker)}>
+            <Callout
+            onPress={onOpenDirection}
+            flat = {true}
+              tooltip
+              style={{
+                height: 90,
+                width: 230,
+                padding: 10,
+                backgroundColor: 'white',
+              }}>
+              <TouchableOpacity onPress={onOpenMaps}>
+                <Text style = {styles.mapText}>{marker.title}</Text>
+                <Text style = {styles.mapText}>{marker.description}</Text>
+              </TouchableOpacity>
+            </Callout>
+          </MapView.Marker>
         ))}
       </MapView>
     </View>
@@ -185,4 +220,10 @@ const styles = StyleSheet.create({
   imageView: {
     marginRight: 15,
   },
+  mapText : {
+    fontSize : 14 , 
+    fontWeight  :'600',
+    textAlign : 'center',
+  color : 'black'
+  }
 });
