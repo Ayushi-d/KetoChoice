@@ -114,26 +114,38 @@ const Maps = () => {
   //   Linking.openURL(url);
   // };
 
-  const onOpenMaps = () => {
-    if (locArray.length == 0) {
-      alert('Please Select Location');
-      return;
-    }
-    var scheme = Platform.OS === 'ios' ? 'maps:' : 'geo:';
-    var url = scheme + `${locArray?.latitude},${locArray?.longitude}`;
-    Linking.openURL(url);
-  };
+  // const onOpenMaps = () => {
+  //   if (locArray.length == 0) {
+  //     alert('Please Select Location');
+  //     return;
+  //   }
+  //   var scheme = Platform.OS === 'ios' ? 'maps:' : 'geo:';
+  //   var url = scheme + `${locArray?.latitude},${locArray?.longitude}`;
+  //   Linking.openURL(url);
+  // };
 
-  const onOpenDirection = () => {
-    if (locArray.length == 0) {
-      alert('Please Select Location to get Directions');
-      return;
-    }
-    // const latLng = `${locArray?.latitude},${locArray?.longitude}`;
-    // Linking.openURL(`google.navigation:q=${latLng}`);
+  // const onOpenDirection = () => {
+  //   if (locArray.length == 0) {
+  //     alert('Please Select Location to get Directions');
+  //     return;
+  //   }
+  //   // const latLng = `${locArray?.latitude},${locArray?.longitude}`;
+  //   // Linking.openURL(`google.navigation:q=${latLng}`);
+  //   const scheme = Platform.select({ios: 'maps:0,0?q=', android: 'geo:0,0?q='});
+  //   const latLng = `${locArray?.latitude},${locArray?.longitude}`;
+  //   const label = 'Custom Label';
+  //   const url = Platform.select({
+  //     ios: `${scheme}${label}@${latLng}`,
+  //     android: `${scheme}${latLng}(${label})`,
+  //   });
+
+  //   Linking.openURL(url);
+  // };
+
+  const openMapsDirection = marker => {
     const scheme = Platform.select({ios: 'maps:0,0?q=', android: 'geo:0,0?q='});
-    const latLng = `${locArray?.latitude},${locArray?.longitude}`;
-    const label = 'Custom Label';
+    const latLng = `${marker?.location?.latitude},${marker?.location?.longitude}`;
+    const label = 'Maps';
     const url = Platform.select({
       ios: `${scheme}${label}@${latLng}`,
       android: `${scheme}${latLng}(${label})`,
@@ -144,7 +156,7 @@ const Maps = () => {
 
   return (
     <View>
-      <View style={styles.topView}>
+      {/* <View style={styles.topView}>
         <View style={{flex: 1, justifyContent: 'center'}}>
           <Image
             source={require('../assets/Google.png')}
@@ -171,7 +183,7 @@ const Maps = () => {
             />
           </TouchableOpacity>
         </View>
-      </View>
+      </View> */}
       <MapView style={styles.absoluteFill} region={region}>
         {coordinate.map((marker, index) => (
           <MapView.Marker
@@ -182,8 +194,8 @@ const Maps = () => {
             pinColor={'green'}
             onPress={() => onClickMarker(marker)}>
             <Callout
-            onPress={onOpenDirection}
-            flat = {true}
+              onPress={() => openMapsDirection(marker)}
+              flat={true}
               tooltip
               style={{
                 height: 90,
@@ -191,9 +203,9 @@ const Maps = () => {
                 padding: 10,
                 backgroundColor: 'white',
               }}>
-              <TouchableOpacity onPress={onOpenMaps}>
-                <Text style = {styles.mapText}>{marker.title}</Text>
-                <Text style = {styles.mapText}>{marker.description}</Text>
+              <TouchableOpacity onPress={() => openMapsDirection(marker)}>
+                <Text style={styles.mapText}>{marker.title}</Text>
+                <Text style={styles.mapText}>{marker.description}</Text>
               </TouchableOpacity>
             </Callout>
           </MapView.Marker>
@@ -206,7 +218,7 @@ export default Maps;
 
 const styles = StyleSheet.create({
   absoluteFill: {
-    height: '100%',
+    height: '105%',
     width: '100%',
     top: 0,
     bottom: 0,
@@ -220,10 +232,10 @@ const styles = StyleSheet.create({
   imageView: {
     marginRight: 15,
   },
-  mapText : {
-    fontSize : 14 , 
-    fontWeight  :'600',
-    textAlign : 'center',
-  color : 'black'
-  }
+  mapText: {
+    fontSize: 14,
+    fontWeight: '600',
+    textAlign: 'center',
+    color: 'black',
+  },
 });

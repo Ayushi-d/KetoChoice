@@ -33,7 +33,7 @@ const Like = () => {
       <View style={{flex: 0.3, justifyContent: 'center', alignItems: 'center'}}>
         <Image
           source={require('../assets/logoGreen.png')}
-          style={{height: 60, width: 222}}
+          style={{height: 55, width: 205}}
         />
       </View>
       <View style={{flex: 0.5, justifyContent: 'space-evenly'}}>
